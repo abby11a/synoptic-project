@@ -1,0 +1,27 @@
+* {
+    padding: 0;
+    margin: 0;
+    color: #1a1f36;
+    box-sizing: border-box;
+    font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica Neue,Ubuntu,sans-serif;
+}
+
+.box {
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 15vh;
+    margin-bottom: 1rem;
+    border-radius: 10px;
+    border-color: transparent;
+    padding: 2%;
+    box-shadow: 5px 8px #3a20751f;
+    width: 75vw;
+    background-color: #ffffff;
+    left: 2%;
+    top: 2%;
+    min-width: 300px;
+}
+
+body{
+    background-color: #bbcce2;
+}
