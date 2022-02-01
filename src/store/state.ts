@@ -1,5 +1,5 @@
 import { atom } from 'recoil';
-import {IQuiz, IQuizResponse} from "../components/Quiz-Manager"
+import { IQuiz } from "../components/Quiz-Manager"
 export const loginUserState = atom({
   key: "loginUserState",
   default: {
@@ -17,3 +17,11 @@ export const quizState = atom({
   key: "quizState",
   default: {} as IQuiz[]
 });
+
+export const questionState = atom({
+  key: "questionState",
+  default: {
+    questions: false,
+    questionNumber: 0
+  }
+})

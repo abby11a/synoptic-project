@@ -1,8 +1,9 @@
 import { Login } from "./login/Login";
 import { Quizzes } from "./quizzes/Quizzes";
-import { loggedInState, quizState } from "../store/state";
+import { loggedInState, questionState, quizState } from "../store/state";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import { useEffect } from "react";
+import { Questions } from "./questions/Questions";
 
 export interface IQuiz {
     "id":{"N":number},
@@ -41,6 +42,7 @@ const getApiKeys = async (): Promise<IQuizResponse> => {
 
 export function QuizManager() {
     const loggedIn = useRecoilValue(loggedInState);
+    const question = useRecoilValue(questionState);
     const setQuiz = useSetRecoilState(quizState);
 
     const fetchData = async (): Promise<void> => {
@@ -55,7 +57,7 @@ export function QuizManager() {
 
     return (
         <div>
-            {!loggedIn ? <Login/> : <Quizzes/>}
+            {!loggedIn ? <Login/> : (!question.questions ? <Quizzes/> : <Questions/>)}
         </div>
     )
 }
