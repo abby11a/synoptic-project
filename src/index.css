@@ -25,3 +25,29 @@
 body{
     background-color: #bbcce2;
 }
+
+.title{
+    display: block;
+    font-size: xxx-large;
+    text-align: center;
+    margin-bottom: 4%;
+    color: #461e63;
+    font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    letter-spacing: 1px;
+}
+
+.button{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 5%;
+    border-radius: 20px;
+    background-color: #6b48eb;
+    font-weight: 500;
+    color: white;
+    padding: 10px;
+    width: 40%;
+    border: none;
+    font-size: medium;
+    box-shadow: 5px 8px #3a20751f;
+}
