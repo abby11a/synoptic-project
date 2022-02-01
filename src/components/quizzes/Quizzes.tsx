@@ -1,19 +1,20 @@
-import { mockQuizData } from "../quiz-data";
+import { useRecoilValue } from "recoil";
+import { quizState } from "../../store/state";
 import "./quizzes.css";
 
 export function Quizzes() {
-    let quizData = mockQuizData;
+    const quiz = useRecoilValue(quizState);
     return(
       <div>
         <div className="box">
          <h1 className="title">Quizzes</h1>
-          {quizData.map((quiz)=>{
+          {quiz.map((quiz)=>{
               return(
-                  <div className="quiz-box">{quiz.quizName}</div>
+                  <div className="quiz-box">{quiz.quizName.S}</div>
               )
           })}
         </div>
       </div>
     )
-  }
+}
   
