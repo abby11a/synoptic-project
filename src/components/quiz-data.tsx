@@ -30,6 +30,16 @@ export const mockQuizData: IQuiz[] = [
                     D: "Quito",
                     correct: "C"
                 }
+            },
+            {
+                question: "What continent is Argentina in?",
+                answers: {
+                    A: "Europe",
+                    B: "South America",
+                    C: "Asia",
+                    D: "Africa",
+                    correct: "B"
+                }
             }
         ]
     },

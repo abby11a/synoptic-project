@@ -1,6 +1,4 @@
-import { useRecoilState } from "recoil";
-import { loginUserState} from "../../store/state";
-import { IQuiz, mockQuizData } from "./quiz-data";
+import { mockQuizData } from "../quiz-data";
 import "./quizzes.css";
 
 export function Quizzes() {
