@@ -1,3 +1,8 @@
+export interface IUser {
+    username: string,
+    password: string
+}
+
 interface IQuizAnswer {
     A: string,
     B: string,

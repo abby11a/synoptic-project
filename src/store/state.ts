@@ -7,3 +7,8 @@ export const loginUserState = atom({
     "password": ''
   }
 });
+
+export const loggedInState = atom({
+  key: "loggedInState",
+  default: false
+});

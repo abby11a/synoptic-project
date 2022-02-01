@@ -1,28 +1,51 @@
-import { useRecoilState } from "recoil";
-import { loginUserState} from "../../store/state";
+import { useRecoilState, useSetRecoilState } from "recoil";
+import { loggedInState, loginUserState } from "../../store/state";
+import { IUser } from "../quiz-data";
 import "./login.css";
 
+interface IApiResponse { // interface for the response (TypeScript)
+    Count: number,
+    Items: {
+        role?: {string: string},
+        password?: {S: string},
+        username?: {S: string}
+    }[],
+    ScannedCount: number
+}
+
 export function Login() {
-    return(
+    const [user, setUser] = useRecoilState(loginUserState); // state stores the client's username and password
+    const setLoggedIn = useSetRecoilState(loggedInState); // state that allows the user to access quiz manager after logging in
+
+    const queryValidation = (res: IApiResponse, password: string) => { // function that deals with the returned API value
+        if (res.Count === 1){
+            if(password === res.Items[0].password!.S){
+                setLoggedIn(true)
+            } else {
+                alert('Incorrect Password')
+            }
+        } else {
+            alert("Incorrect Username")
+        }
+    }
+
+    const checkUser = async (user: IUser) => { // calls the API to check the username & password against the DB
+        const url = `https://i83herpnfj.execute-api.eu-west-1.amazonaws.com/test/query-user?username=${user.username}`;
+        const data = (await fetch(url)).json().then((res)=>{queryValidation(res, user.password)});
+        console.log(data);
+    }
+
+    return (
       <div>
         <div className="box">
-         <h1 className="title">Login</h1>
-          <LoginFields/>
-          <button className="button" type="submit" onClick={()=>{}}>Submit</button>
-        </div>
-      </div>
-    )
-  }
-  
-export function LoginFields() {
-    const [loginUser, setLoginUser] = useRecoilState(loginUserState);
-    return(
-      <div>
-        <div className='label'>Username
-            <input className="input-box" type={"text"} placeholder="Enter Username" name={"username"} onChange={(e)=>setLoginUser({username: e.target.value, password: loginUser.password})}></input>
-        </div>
-        <div className='label'>Password
-            <input className="input-box" type={"password"} placeholder="Enter Password" name={"password"} onChange={(e)=>setLoginUser({username: loginUser.username, password: e.target.value})}></input>
+            <h1 className="title">Login</h1>
+            <div className='label'>Username
+                <input className="input-box" type={"text"} placeholder="Enter Username" name={"username"} onChange={(e)=>setUser({username: e.target.value, password: user.password})}></input>
+            </div>
+            <div className='label'>Password
+                <input className="input-box" type={"password"} placeholder="Enter Password" name={"password"} onChange={(e)=>setUser({username: user.username, password: e.target.value})}></input>
+            </div>
+            <button className="button" type="submit" onClick={()=>checkUser(user)}>Submit</button>
         </div>
       </div>
     )
