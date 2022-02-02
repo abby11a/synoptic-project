@@ -2,6 +2,7 @@ import { useRecoilState, useSetRecoilState } from "recoil";
 import { loggedInState, loginUserState } from "../../store/state";
 import { IUser } from "../quiz-data";
 import "./login.css";
+import {hash, compare} from './encrypt';
 
 interface IApiResponse { // interface for the response (TypeScript)
     Count: number,
@@ -13,13 +14,23 @@ interface IApiResponse { // interface for the response (TypeScript)
     ScannedCount: number
 }
 
+
+const rawPassword = 'password'
+
+console.log(hash(rawPassword))
+//1563995248971$10$58e0867f3acc11de363e03389bb27167
+
+console.log(compare('password','1563995248971$10$58e0867f3acc11de363e03389bb27167'));
+//true
+
+
 export function Login() {
     const [user, setUser] = useRecoilState(loginUserState); // state stores the client's username and password
     const setLoggedIn = useSetRecoilState(loggedInState); // state that allows the user to access quiz manager after logging in
 
     const queryValidation = (res: IApiResponse, password: string) => { // function that deals with the returned API value
         if (res.Count === 1){
-            if(password === res.Items[0].password!.S){
+            if(compare(password, res.Items[0].password!.S)){
                 setLoggedIn(true)
             } else {
                 alert('Incorrect Password')
