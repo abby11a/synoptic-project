@@ -15,6 +15,9 @@
 .quiz-box:hover {
     background-color: #461e63;
     color: white;
+}
+
+.question:hover{
     cursor: pointer;
 }
 

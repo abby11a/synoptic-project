@@ -15,9 +15,9 @@ export function Quizzes() {
          <h1 className="title">Quizzes </h1>
           {quiz.map((quiz, index)=>{
               return(
-                  <div onClick={()=>setQuestion({questions: true, questionNumber: index})} className="quiz-box">
-                    {quiz.quizName.S}
+                  <div className="quiz-box">
                     <button className="delete-button" onClick={()=>deleteQuiz(quiz.id.N)}>X</button>
+                    <div className="question" onClick={()=>setQuestion({questions: true, questionNumber: index})}>{quiz.quizName.S}</div>
                   </div>
               )
           })}
@@ -34,7 +34,6 @@ async function deleteQuiz (id: number) {
         'Content-Type': 'application/json',
       },
     }).then((res)=>console.log(res));
-    console.log("Delete Question")
 }
 
 async function addQuiz (id: number, quizName: string) {

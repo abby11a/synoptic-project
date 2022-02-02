@@ -22,13 +22,14 @@ export function Questions() {
           {quiz[questions.questionNumber].quizQuestions.L.map((answer, index)=>{
               return (
                   <div className="question-box" onClick={()=>{setQuestionNumberState(index); setEditQuestionPageState(true)}}>
-                      <button onClick={()=>deleteItem(answer.M.question.S)}>X</button>
+                      <button className="x-button" onClick={()=>deleteItem(answer.M.question.S)}>X</button>
                       <h3 className="question-title">{answer.M.question.S}</h3>
                       <ol type="A" className="questions">
-                          <li>{answer.M.answers.M.A.S}</li>
-                          <li>{answer.M.answers.M.B.S}</li>
-                          <li>{answer.M.answers.M.C.S}</li>
-                      </ol>
+                            <li className="question">{answer.M.answers.M.A.S}</li>
+                            <li className="question">{answer.M.answers.M.B.S}</li>
+                            <li className="question">{answer.M.answers.M.C.S}</li>
+                      </ol><br/>
+                      <div>Correct Answer: {answer.M.answers.M.correct.S}</div>
                   </div>
               )
           })}
