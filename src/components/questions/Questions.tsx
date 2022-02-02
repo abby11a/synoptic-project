@@ -1,20 +1,26 @@
-import { useRecoilValue } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import { questionState, quizState } from "../../store/state";
 
 import "./questions.css";
 
+function deleteItem(itemName: string) {
+    console.log(itemName)
+}
+
 export function Questions() {
-    const questions = useRecoilValue(questionState);
+    const [questions, setQuestions] = useRecoilState(questionState);
     const quiz = useRecoilValue(quizState);
 
     return(
       <div>
         <div className="box">
-         <h1 className="title">Questions</h1>
-         <div>
+        <button onClick={()=>setQuestions({questions: false, questionNumber: 0})}>Back to Quizzes</button>
+        <h1 className="title">Questions</h1>
+        <div>
             {quiz[questions.questionNumber].quizQuestions.L.map((answer)=>{
                 return (
                     <div className="question-box">
+                        <button onClick={()=>deleteItem(answer.M.question.S)}>X</button>
                         <h3 className="question-title">{answer.M.question.S}</h3>
                         <ol type="A" className="questions">
                             <li>{answer.M.answers.M.A.S}</li>
@@ -23,11 +29,9 @@ export function Questions() {
                         </ol>
                     </div>
                 )
-                }
-            )}
+            })}
           </div>
         </div>
       </div>
     )
   }
-  

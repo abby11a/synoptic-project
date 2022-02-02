@@ -1,5 +1,5 @@
 import { Login } from "./login/Login";
-import { Quizzes } from "./quizzes/Quizzes";
+import { Quizzes } from "./quizzes/Quizzes-Admin";
 import { loggedInState, questionState, quizState } from "../store/state";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import { useEffect } from "react";
@@ -33,10 +33,9 @@ export interface IQuizResponse {
     "ScannedCount":number
   }
 
-const getApiKeys = async (): Promise<IQuizResponse> => {
+export const getApiKeys = async (): Promise<IQuizResponse> => {
     const url = ("https://i83herpnfj.execute-api.eu-west-1.amazonaws.com/test/list");
     const data = (await fetch(url)).json();
-    console.log(data)
     return data;
 };
 
@@ -57,7 +56,7 @@ export function QuizManager() {
 
     return (
         <div>
-            {!loggedIn ? <Login/> : (!question.questions ? <Quizzes/> : <Questions/>)}
+            {!loggedIn ? <Login/> : (!question.questions ? <Quizzes/> : (<Questions/>))}
         </div>
     )
 }

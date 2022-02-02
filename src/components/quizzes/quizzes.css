@@ -17,3 +17,65 @@
     color: white;
     cursor: pointer;
 }
+
+.x-button {
+    display: block;
+    margin-left: auto;
+    margin-right: 0;
+    color: white;
+}
+
+.x-button:hover{
+    cursor: pointer;
+}
+
+.small-button{
+    display: block;
+    margin-right: 0;
+    margin-left: auto;
+    border-radius: 20px;
+    background-color: #6b48eb;
+    font-weight: 500;
+    color: white;
+    padding: 10px;
+    border: none;
+    font-size: medium;
+    box-shadow: 5px 8px #3a20751f;
+}
+
+.small-button:hover{
+    cursor: pointer;
+}
+
+.add-form {
+    display: none;
+    position: fixed;
+    top: 0;
+    right: 10%;
+    z-index: 9;
+}
+
+.form-box {
+    margin-top: 2vh;
+    margin-bottom: 1rem;
+    border-radius: 10px;
+    border-color: transparent;
+    padding: 2%;
+    box-shadow: 5px 8px #3a20751f;
+    width: 80vw;
+    background-color:#461e63;
+    top: 2%;
+    min-width: 300px;
+    color: white;
+}
+
+.form-title{
+    display: block;
+    font-size: xxx-large;
+    text-align: center;
+    margin-bottom: 4%;
+    color: white;
+    font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    letter-spacing: 1px;
+}
+

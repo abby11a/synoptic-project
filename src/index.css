@@ -52,6 +52,10 @@ body{
     box-shadow: 5px 8px #3a20751f;
 }
 
+.button:hover{
+    cursor: pointer;
+}
+
 .input-box {
     position: relative;
     border-radius: 10px;
@@ -64,4 +68,9 @@ body{
     margin-bottom: 12px;
     background-color: #a8b2e6;
     bottom: 50%;
+}
+
+button {
+    background-color: transparent;
+    border-color: transparent;
 }

@@ -8,6 +8,12 @@ export const loginUserState = atom({
   }
 });
 
+// restricted, view, admin
+export const userRoleState = atom({
+  key: "userRoleState",
+  default: "restricted"
+});
+
 export const loggedInState = atom({
   key: "loggedInState",
   default: false
@@ -25,3 +31,13 @@ export const questionState = atom({
     questionNumber: 0
   }
 })
+
+export const selectedItemState = atom({
+  key: "selectedItemState",
+  default: ""
+});
+
+export const quizNameState = atom({
+  key: "quizNameState",
+  default: ""
+});

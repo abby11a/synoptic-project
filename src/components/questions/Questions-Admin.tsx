@@ -10,7 +10,7 @@ export function Questions() {
         <h1 className="title">Questions</h1>
         
         <div>
-          {quizData.quizQuestions.map((answer)=>{
+          {quizData.quizQuestions.map((answer, index)=>{
               return (
                   <div className="question-box" onClick={()=>editQuestion(answer.question)}>
                       <h3 className="question-title">{answer.question}</h3>
@@ -39,6 +39,6 @@ function editQuestion (question: string) {
   console.log(question)
 }
 
-function deleteQuestion () {
+async function deleteQuestion () {
   console.log("Delete Question")
 }
