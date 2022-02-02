@@ -1,11 +1,9 @@
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import { editQuestionPageState, questionNumberState, questionState, quizState } from "../../store/state";
+import { deleteQuestion } from "../edit-question/EditQuestion";
+
 
 import "./questions.css";
-
-function deleteItem(itemName: string) {
-    console.log(itemName)
-}
 
 export function Questions() {
   const [questions, setQuestions] = useRecoilState(questionState);
@@ -22,14 +20,14 @@ export function Questions() {
           {quiz[questions.questionNumber].quizQuestions.L.map((answer, index)=>{
               return (
                   <div className="question-box" onClick={()=>{setQuestionNumberState(index); setEditQuestionPageState(true)}}>
-                      <button className="x-button" onClick={()=>deleteItem(answer.M.question.S)}>X</button>
+                      <button className="x-button" onClick={()=>deleteQuestion(questions.questionNumber, index, quiz[questions.questionNumber])}>X</button>
                       <h3 className="question-title">{answer.M.question.S}</h3>
-                      <ol type="A" className="questions">
-                            <li className="question">{answer.M.answers.M.A.S}</li>
-                            <li className="question">{answer.M.answers.M.B.S}</li>
-                            <li className="question">{answer.M.answers.M.C.S}</li>
+                      <ol type="A" className="answers">
+                            <li className="answer">{answer.M.answers.M.A.S}</li>
+                            <li className="answer">{answer.M.answers.M.B.S}</li>
+                            <li className="answer">{answer.M.answers.M.C.S}</li>
                       </ol><br/>
-                      <div>Correct Answer: {answer.M.answers.M.correct.S}</div>
+                      <div className="correct-answer">Correct Answer: {answer.M.answers.M.correct.S}</div>
                   </div>
               )
           })}

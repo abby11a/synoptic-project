@@ -24,15 +24,20 @@
     cursor: pointer;
 }
 
+.correct-answer {
+    color:#461e63;
+    font-weight: 700;
+}
+
 .x-button {
     margin-right: 10px;
     color:#461e63;
 }
 
-.questions{
+.answers{
     padding-left: 30px;
 }
-.question{
+.answer{
     padding-top: 10px;
 }
 .delete-button{

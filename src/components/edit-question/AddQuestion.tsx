@@ -1,14 +1,16 @@
 import React, { useEffect } from "react";
-import { useRecoilState, useRecoilValue } from "recoil";
-import { answerState, questionNumberState, questionState, quizState } from "../../store/state";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
+import { answerState, editQuestionPageState, questionNumberState, questionState, quizState } from "../../store/state";
 import { IQuiz, IQuizQuestion } from "../Quiz-Manager";
 import "./edit-questions.css";
 
-export function EditQuestion() {
+export function AddQuestion() {
+  const setEditQuestionPageState = useSetRecoilState(editQuestionPageState);
   return(
     <div>
       <div className="box">
-        <h1 className="title">Edit Question</h1>
+        <button onClick={()=>setEditQuestionPageState(false)}>Back to Questions</button>
+        <h1 className="title">Add Question</h1>
         <AddAnswers/>
       </div>
     </div>
@@ -52,12 +54,12 @@ export function AddAnswers() {
     
     <div>
         <div>
-          <input className="input-box" value={answer.question} placeholder="Enter New Question" name={"questions"} onChange={(e)=>changeAnswer(e, 'question')}></input>
-          <input className="input-box" value={answer.a} placeholder="Enter Answer A" name={"answerA"} onChange={(e)=>changeAnswer(e, 'a')}></input>
-          <input className="input-box" value={answer.b} placeholder="Enter Answer B" name={"answerB"} onChange={(e)=>changeAnswer(e, 'b')}></input>
-          <input className="input-box" value={answer.c} placeholder="Enter Answer C" name={"answerC"} onChange={(e)=>changeAnswer(e, 'c')}></input>
-          <input className="input-box" value={answer.d} placeholder="Enter Answer D (optional)" name={"answerD"} onChange={(e)=>changeAnswer(e, 'd')}></input>
-          <input className="input-box" value={answer.e} placeholder="Enter Answer E (optional)" name={"answerE"} onChange={(e)=>changeAnswer(e, 'e')}></input>
+          <input className="input-box" placeholder="Enter New Question" name={"questions"} onChange={(e)=>changeAnswer(e, 'question')}></input>
+          <input className="input-box" placeholder="Enter Answer A" name={"answerA"} onChange={(e)=>changeAnswer(e, 'a')}></input>
+          <input className="input-box" placeholder="Enter Answer B" name={"answerB"} onChange={(e)=>changeAnswer(e, 'b')}></input>
+          <input className="input-box" placeholder="Enter Answer C" name={"answerC"} onChange={(e)=>changeAnswer(e, 'c')}></input>
+          <input className="input-box" placeholder="Enter Answer D (optional)" name={"answerD"} onChange={(e)=>changeAnswer(e, 'd')}></input>
+          <input className="input-box" placeholder="Enter Answer E (optional)" name={"answerE"} onChange={(e)=>changeAnswer(e, 'e')}></input>
         </div>
     
       <div className="correct-title">Correct Answer: </div>

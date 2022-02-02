@@ -19,6 +19,7 @@
 
 .question:hover{
     cursor: pointer;
+    color: white;
 }
 
 .x-button {

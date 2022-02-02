@@ -17,10 +17,10 @@ export function Questions() {
                 return (
                     <div className="question-box">
                         <h3 className="question-title">{answer.M.question.S}</h3>
-                        <ol type="A" className="questions">
-                            <li className="question">{answer.M.answers.M.A.S}</li>
-                            <li className="question">{answer.M.answers.M.B.S}</li>
-                            <li className="question">{answer.M.answers.M.C.S}</li>
+                        <ol type="A" className="answers">
+                            <li className="answer">{answer.M.answers.M.A.S}</li>
+                            <li className="answer">{answer.M.answers.M.B.S}</li>
+                            <li className="answer">{answer.M.answers.M.C.S}</li>
                         </ol>
                     </div>
                 )

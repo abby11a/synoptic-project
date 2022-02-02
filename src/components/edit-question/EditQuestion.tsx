@@ -1,13 +1,15 @@
 import React, { useEffect } from "react";
-import { useRecoilState, useRecoilValue } from "recoil";
-import { answerState, questionNumberState, questionState, quizState } from "../../store/state";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
+import { answerState, editQuestionPageState, questionNumberState, questionState, quizState } from "../../store/state";
 import { IQuiz, IQuizQuestion } from "../Quiz-Manager";
 import "./edit-questions.css";
 
 export function EditQuestion() {
+  const setEditQuestionPageState = useSetRecoilState(editQuestionPageState);
   return(
     <div>
       <div className="box">
+        <button onClick={()=>setEditQuestionPageState(false)}>Back to Questions</button>
         <h1 className="title">Edit Question</h1>
         <AddAnswers/>
       </div>
@@ -67,7 +69,7 @@ export function AddAnswers() {
         <option value="b"></option>
         <option value="c"></option>
       </datalist>
-      <button className="button" type="submit" onClick={()=>editQuestion(questions.questionNumber, processData(quiz[questions.questionNumber], questionNumber, newQuizQuestion(answer)))}>Add Question</button>
+      <button className="button" type="submit" onClick={()=>editQuestion(questions.questionNumber, questionNumber, answer, quiz[questions.questionNumber])}>Add Question</button>
     </div>
   )
 }
@@ -82,8 +84,8 @@ function newQuizQuestion (answer: IAnswer): IQuizQuestion {
           "A": {"S": answer.a},
           "B": {"S": answer.b},
           "C": {"S": answer.c},
-          "D": {"S": answer.d},
-          "E": {"S": answer.e},
+          "D": {"S": "answer.d!"},
+          "E": {"S": "answer.e!"},
           "correct": {"S": answer.correct}
           }
       }
@@ -92,18 +94,42 @@ function newQuizQuestion (answer: IAnswer): IQuizQuestion {
 }
 
 // creates a new IQuiz with the updated quiz question
-function processData(quiz: IQuiz, quizNumber: number, newQuizQuestion: IQuizQuestion): IQuizQuestion[]{
+function processData(quiz: IQuiz, questionIndex: number, newQuizQuestion: IQuizQuestion): IQuizQuestion[]{
   let newQuizQuestions = quiz.quizQuestions.L.slice();
-  newQuizQuestions[quizNumber] = newQuizQuestion;
+  newQuizQuestions[questionIndex] = newQuizQuestion;
   return newQuizQuestions;
 }
 
 // calls API to actually update data
-async function editQuestion (id: number, quizQuestions: IQuizQuestion[]) {
-  const url = `https://i83herpnfj.execute-api.eu-west-1.amazonaws.com/test/edit-question`;
-  await fetch(url, {
+async function editQuestion (quizId: number, questionIndex: number, answer: IAnswer, quiz: IQuiz) {
+  let quizQuestion = newQuizQuestion(answer);
+  let newQuizData = processData(quiz, questionIndex, quizQuestion);
+  let quizName = quiz.quizName.S;
+
+  const url = ` https://i83herpnfj.execute-api.eu-west-1.amazonaws.com/test/create`;
+  const data = await fetch(url, {
     method: 'POST',
-    body: JSON.stringify({id: id, quizQuestions: quizQuestions}),
+    body: JSON.stringify({id: quizId, quizName: quizName, quizQuestions: newQuizData}),
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  }).then((res)=>console.log(res));
+}
+
+function processDeleteData(quiz: IQuiz, questionIndex: number,): IQuizQuestion[]{
+  let newQuizQuestions = quiz.quizQuestions.L.slice();
+  delete newQuizQuestions[questionIndex]
+  return newQuizQuestions;
+}
+
+export async function deleteQuestion (quizId: number, questionIndex: number, quiz: IQuiz) {
+  let newQuizData = processDeleteData(quiz, questionIndex);
+  let quizName = quiz.quizName.S;
+  
+  const url = ` https://i83herpnfj.execute-api.eu-west-1.amazonaws.com/test/create`;
+  const data = await fetch(url, {
+    method: 'POST',
+    body: JSON.stringify({id: quizId, quizName: quizName, quizQuestions: newQuizData}),
     headers: {
       'Content-Type': 'application/json',
     },
@@ -115,7 +141,7 @@ interface IAnswer {
   a: string;
   b: string;
   c: string;
-  d: string;
-  e: string;
+  d?: string;
+  e?: string;
   correct: string;
 }
