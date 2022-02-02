@@ -1,30 +1,31 @@
 import { Login } from "./login/Login";
 import { Quizzes } from "./quizzes/Quizzes-Admin";
-import { loggedInState, questionState, quizState } from "../store/state";
+import { editQuestionPageState, loggedInState, questionState, quizState } from "../store/state";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import { useEffect } from "react";
-import { Questions } from "./questions/Questions";
+import { Questions } from "./questions/Questions-Admin";
+import { EditQuestion } from "./edit-question/EditQuestion";
+
+export interface IQuizQuestion {
+    "M": {
+        "question":{"S":string},
+        "answers": {
+            "M": {
+            "A": {"S": string},
+            "B": {"S": string},
+            "C": {"S": string},
+            "D"?: {"S": string},
+            "E"?: {"S": string},
+            "correct": {"S": string}
+            }
+        }
+    }
+}
 
 export interface IQuiz {
     "id":{"N":number},
     "quizName": {"S":string},
-    "quizQuestions": {
-        "L": {
-            "M": {
-                "question":{"S":string},
-                "answers": {
-                    "M": {
-                    "A": {"S": string},
-                    "B": {"S": string},
-                    "C": {"S": string},
-                    "D"?: {"S": string},
-                    "E"?: {"S": string},
-                    "correct": {"S": string}
-                    }
-                }
-            }
-        }[]
-    }
+    "quizQuestions": {"L": IQuizQuestion[]}
 }
 
 export interface IQuizResponse {
@@ -42,6 +43,7 @@ export const getApiKeys = async (): Promise<IQuizResponse> => {
 export function QuizManager() {
     const loggedIn = useRecoilValue(loggedInState);
     const question = useRecoilValue(questionState);
+    const answer = useRecoilValue(editQuestionPageState);
     const setQuiz = useSetRecoilState(quizState);
 
     const fetchData = async (): Promise<void> => {
@@ -56,8 +58,7 @@ export function QuizManager() {
 
     return (
         <div>
-            {!loggedIn ? <Login/> : (!question.questions ? <Quizzes/> : (<Questions/>))}
+            {!loggedIn ? <Login/> : (!question.questions ? <Quizzes/> : (!answer ? <Questions/> : <EditQuestion/>))}
         </div>
     )
 }
-

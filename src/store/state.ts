@@ -37,7 +37,24 @@ export const selectedItemState = atom({
   default: ""
 });
 
+//quizzes-admin
 export const quizNameState = atom({
   key: "quizNameState",
   default: ""
 });
+
+// edit-question
+export const answerState = atom({
+  key: "answerstate",
+  default: {question:'', a: '', b: '', c: '', d:'', e:'', correct: ''},
+});
+
+export const questionNumberState = atom({
+  key: "questionNumberState",
+  default: 0,
+});
+
+export const editQuestionPageState = atom({
+  key: "editQuestionPageState",
+  default: false
+})

@@ -1,44 +1,39 @@
-import { mockQuizData } from "../quiz-data";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
+import { editQuestionPageState, questionNumberState, questionState, quizState } from "../../store/state";
+
 import "./questions.css";
 
+function deleteItem(itemName: string) {
+    console.log(itemName)
+}
+
 export function Questions() {
-  let quizData = mockQuizData[0];
+  const [questions, setQuestions] = useRecoilState(questionState);
+  const quiz = useRecoilValue(quizState);
+  const setQuestionNumberState = useSetRecoilState(questionNumberState);
+  const setEditQuestionPageState = useSetRecoilState(editQuestionPageState);
+
   return(
     <div>
       <div className="box">
-        <button className="add-button" onClick={()=>addQuestion()}>Add</button>
-        <h1 className="title">Questions</h1>
-        
-        <div>
-          {quizData.quizQuestions.map((answer, index)=>{
+      <button onClick={()=>setQuestions({questions: false, questionNumber: 0})}>Back to Quizzes</button>
+      <h1 className="title">Questions</h1>
+      <div>
+          {quiz[questions.questionNumber].quizQuestions.L.map((answer, index)=>{
               return (
-                  <div className="question-box" onClick={()=>editQuestion(answer.question)}>
-                      <h3 className="question-title">{answer.question}</h3>
-                      <button className="delete-button" onClick={()=>deleteQuestion()}>X</button>
+                  <div className="question-box" onClick={()=>{setQuestionNumberState(index); setEditQuestionPageState(true)}}>
+                      <button onClick={()=>deleteItem(answer.M.question.S)}>X</button>
+                      <h3 className="question-title">{answer.M.question.S}</h3>
                       <ol type="A" className="questions">
-                          <li key="A">{answer.answers.A}</li>
-                          <li key="B">{answer.answers.B}</li>
-                          <li key="C">{answer.answers.C}</li>
+                          <li>{answer.M.answers.M.A.S}</li>
+                          <li>{answer.M.answers.M.B.S}</li>
+                          <li>{answer.M.answers.M.C.S}</li>
                       </ol>
                   </div>
               )
-              }
-          )}
+          })}
         </div>
-        <i>Click an entry to edit it.</i>
       </div>
     </div>
   )
-}
-  
-function addQuestion () {
-  console.log("Add Question")
-}
-
-function editQuestion (question: string) {
-  console.log(question)
-}
-
-async function deleteQuestion () {
-  console.log("Delete Question")
 }

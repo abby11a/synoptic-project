@@ -20,6 +20,10 @@
     color: #461e63
 }
 
+.question-box:hover{
+    cursor: pointer;
+}
+
 .questions{
     padding-left: 30px
 }

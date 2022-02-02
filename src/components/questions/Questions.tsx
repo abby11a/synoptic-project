@@ -3,10 +3,6 @@ import { questionState, quizState } from "../../store/state";
 
 import "./questions.css";
 
-function deleteItem(itemName: string) {
-    console.log(itemName)
-}
-
 export function Questions() {
     const [questions, setQuestions] = useRecoilState(questionState);
     const quiz = useRecoilValue(quizState);
@@ -20,7 +16,6 @@ export function Questions() {
             {quiz[questions.questionNumber].quizQuestions.L.map((answer)=>{
                 return (
                     <div className="question-box">
-                        <button onClick={()=>deleteItem(answer.M.question.S)}>X</button>
                         <h3 className="question-title">{answer.M.question.S}</h3>
                         <ol type="A" className="questions">
                             <li>{answer.M.answers.M.A.S}</li>
@@ -34,4 +29,4 @@ export function Questions() {
         </div>
       </div>
     )
-  }
+}

@@ -46,7 +46,6 @@ async function addQuiz (id: number, quizName: string) {
       'Content-Type': 'application/json',
     },
   }).then((res)=>console.log(res));
-  console.log("Delete Question")
 }
 
 function AddQuiz () {

@@ -12,7 +12,7 @@ interface IQuizAnswer {
     correct: "A"|"B"|"C"|"D"|"E"
 }
 
-interface IQuizQuestion {
+export interface IQuizQuestion {
     question: string,
     answers: IQuizAnswer
 }
