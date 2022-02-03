@@ -2,7 +2,7 @@ import { fireEvent, render, screen } from '@testing-library/react';
 import { RecoilRoot } from 'recoil';
 import { questionNumberState } from '../../store/state';
 import { RecoilObserver } from '../login/login.test';
-import { Questions } from './Questions-Admin';
+import { QuestionsAdmin } from './Questions-Admin';
 
 describe('The admin questions page should', () => {
     test('change the question number when the user clicks an item', () => {
@@ -11,7 +11,7 @@ describe('The admin questions page should', () => {
         render(
         <RecoilRoot>
             <RecoilObserver node={questionNumberState} onChange={onChange} />
-            <Questions />
+            <QuestionsAdmin />
         </RecoilRoot>,
         );
 

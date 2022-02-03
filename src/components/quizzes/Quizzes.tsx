@@ -1,5 +1,6 @@
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import { loggedInState, quizIndexState, quizState } from "../../store/state";
+import { deleteUserCookies } from "../Quiz-Manager";
 import "./quizzes.css";
 
 export function Quizzes() {
@@ -10,7 +11,7 @@ export function Quizzes() {
     return(
       <div>
         <div className="box">
-         <button onClick={()=>setLoggedIn(false)}>Log out</button>
+        <button onClick={()=>deleteUserCookies()}>Log out</button>
          <h1 className="title">Quizzes</h1>
           {quiz.map((quiz, index)=>{
               return(

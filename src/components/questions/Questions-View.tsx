@@ -1,13 +1,11 @@
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import { addQuestionPageState, answerState, editQuestionPageState, questionNumberState, quizIndexState, quizState } from "../../store/state";
-import { deleteQuestion } from "../edit-question/EditQuestion";
 
 
 import "./questions.css";
 
-export function QuestionsAdmin() {
+export function QuestionsView() {
   const [quizIndex, setQuizIndex] = useRecoilState(quizIndexState);
-  const setAnswer = useSetRecoilState(answerState);
   const setAddQuestionPage = useSetRecoilState(addQuestionPageState);
   const quiz = useRecoilValue(quizState);
   const setQuestionNumberState = useSetRecoilState(questionNumberState);
@@ -17,13 +15,11 @@ export function QuestionsAdmin() {
     <div>
       <div className="box">
       <button onClick={()=>setQuizIndex({questions: false, index: 0})}>Back to Quizzes</button>
-      <button className="small-button" onClick={()=>{setAnswer(resetAnswers); setEditQuestionPageState(true); setAddQuestionPage(true)}}>Add Question</button>
       <h1 className="title">Questions</h1>
       <div>
           {quiz[quizIndex.index].quizQuestions.L.map((answer, index)=>{
               return (
-                  <div className="question-box-admin" data-testid={`question-item-box-${index}`} onClick={()=>{setQuestionNumberState(index); setEditQuestionPageState(true); setAddQuestionPage(false)}}>
-                      <button className="x-button" onClick={()=>deleteQuestion(quizIndex.index, index, quiz[quizIndex.index])}>X</button>
+                  <div className="question-box" data-testid={`question-item-box-${index}`}>
                       <h3 className="question-title">{answer.M.question.S}</h3>
                       <ol type="A" className="answers">
                             <li className="answer">{answer.M.answers.M.A.S}</li>
@@ -41,5 +37,3 @@ export function QuestionsAdmin() {
     </div>
   )
 }
-
-const resetAnswers = {question:'null', a: '', b: '', c: '', d:'', e:'', correct: ''}

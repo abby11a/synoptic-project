@@ -1,16 +1,16 @@
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
-import { loggedInState, quizIndexState, quizNameState, quizState } from "../../store/state";
+import { quizIndexState, quizNameState, quizState } from "../../store/state";
+import { deleteUserCookies } from "../Quiz-Manager";
 import "./quizzes.css";
 
 export function QuizzesAdmin() {
     const quiz = useRecoilValue(quizState);
     const setQuizIndex= useSetRecoilState(quizIndexState);
-    const setLoggedIn = useSetRecoilState(loggedInState);
     return(
       <div>
         <div id="add-form" className="add-form"><AddQuiz/></div>
         <div className="box" id="main-quizzes-page">
-         <button onClick={()=>setLoggedIn(false)}>Log out</button>
+         <button onClick={()=>deleteUserCookies()}>Log out</button>
          <button className="small-button" onClick={()=>openForm()}>Add Quiz</button>
          <h1 className="title">Quizzes </h1>
           {quiz.map((quiz, index)=>{

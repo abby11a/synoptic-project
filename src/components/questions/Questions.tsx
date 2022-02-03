@@ -21,6 +21,8 @@ export function Questions() {
                             <li className="answer">{answer.M.answers.M.A.S}</li>
                             <li className="answer">{answer.M.answers.M.B.S}</li>
                             <li className="answer">{answer.M.answers.M.C.S}</li>
+                            <li className="answer">{answer.M.answers.M.D?.S}</li>
+                            <li className="answer">{answer.M.answers.M.E?.S}</li>
                         </ol>
                     </div>
                 )

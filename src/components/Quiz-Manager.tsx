@@ -3,9 +3,12 @@ import { QuizzesAdmin } from "./quizzes/Quizzes-Admin";
 import { addQuestionPageState, editQuestionPageState, quizIndexState, quizState } from "../store/state";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import { useEffect } from "react";
-import { Questions } from "./questions/Questions-Admin";
+import { QuestionsAdmin } from "./questions/Questions-Admin";
+import { QuestionsView } from "./questions/Questions-View";
 import { AddQuestion } from "./edit-question/AddQuestion";
 import { EditQuestion } from "./edit-question/EditQuestion";
+import { Login } from "./login/Login";
+import { Questions } from "./questions/Questions";
 
 export interface IQuizQuestion {
     "M": {
@@ -61,10 +64,12 @@ export function QuizManager() {
     
     return (
         <div>
-            {!quizIndex.questions ? <QuizQuestion/> : (!editQuestionPage ? <Questions/> : (addQuestionPage ? <AddQuestion/>: <EditQuestion/>))}
+            {!quizIndex.questions ? <QuizQuizzes/> : (!editQuestionPage ? <QuizQuestions/> : (addQuestionPage ? <AddQuestion/>: <EditQuestion/>))}
         </div>
     )
 }
+
+// if user hasn't been logged in it will return to login page
 function loginCheck () {
     console.log('used')
     if (!getCookie('role')){
@@ -72,12 +77,25 @@ function loginCheck () {
     }
 }
 
-function QuizQuestion () {
+// returns the correct quiz view based on role
+function QuizQuizzes () {
     if (getCookie('role')==="admin"){
         return(<QuizzesAdmin/>)
-    } else {
-        console.log(getCookie('role'))
+    } else if (getCookie('role')===("view")||getCookie('role')===("restricted")){
         return(<Quizzes/>)
+    } else {
+        return(<Login/>)
+    }
+}
+
+// returns correct question page based on role
+function QuizQuestions () {
+    if (getCookie('role')==="admin"){
+        return(<QuestionsAdmin/>)
+    } else if (getCookie('role')===("view")){
+        return(<QuestionsView/>)
+    } else {
+        return(<Questions/>)
     }
 }
 
@@ -91,3 +109,10 @@ function getCookie(cName: string) {
     })
     return res
 }
+
+export function deleteUserCookies() {
+    if( getCookie( "role" ) ) {
+      document.cookie = "role = ;expires=Thu, 01 Jan 1970 00:00:01 GMT";
+        window.location.reload()
+    }
+  }
