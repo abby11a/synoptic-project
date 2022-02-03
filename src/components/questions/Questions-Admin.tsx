@@ -22,7 +22,7 @@ export function Questions() {
       <div>
           {quiz[quizIndex.index].quizQuestions.L.map((answer, index)=>{
               return (
-                  <div className="question-box" onClick={()=>{setQuestionNumberState(index); setEditQuestionPageState(true); setAddQuestionPage(false)}}>
+                  <div className="question-box" data-testid={`question-item-box-${index}`} onClick={()=>{setQuestionNumberState(index); setEditQuestionPageState(true); setAddQuestionPage(false)}}>
                       <button className="x-button" onClick={()=>deleteQuestion(quizIndex.index, index, quiz[quizIndex.index])}>X</button>
                       <h3 className="question-title">{answer.M.question.S}</h3>
                       <ol type="A" className="answers">

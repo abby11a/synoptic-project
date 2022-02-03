@@ -1,7 +1,6 @@
-import { Login } from "./login/Login";
 import { Quizzes } from "./quizzes/Quizzes";
 import { QuizzesAdmin } from "./quizzes/Quizzes-Admin";
-import { addQuestionPageState, editQuestionPageState, loggedInState, quizIndexState, quizState } from "../store/state";
+import { addQuestionPageState, editQuestionPageState, quizIndexState, quizState } from "../store/state";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import { useEffect } from "react";
 import { Questions } from "./questions/Questions-Admin";
@@ -49,7 +48,6 @@ export function QuizManager() {
     const setQuiz = useSetRecoilState(quizState);
 
     const fetchData = async (): Promise<void> => {
-        console.log('fetched')
         getApiKeys().then((res) => {
             return setQuiz(res.Items);
         })
@@ -73,6 +71,7 @@ function loginCheck () {
         window.location.pathname = "/login";
     }
 }
+
 function QuizQuestion () {
     if (getCookie('role')==="admin"){
         return(<QuizzesAdmin/>)
@@ -81,6 +80,7 @@ function QuizQuestion () {
         return(<Quizzes/>)
     }
 }
+
 function getCookie(cName: string) {
     const name = cName + "=";
     const cDecoded = decodeURIComponent(document.cookie); //to be careful

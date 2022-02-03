@@ -14,7 +14,7 @@ export function Quizzes() {
          <h1 className="title">Quizzes</h1>
           {quiz.map((quiz, index)=>{
               return(
-                  <div onClick={()=>setQuizIndex({questions: true, index: index})} className="quiz-box">{quiz.quizName.S}</div>
+                  <div data-testid={`quiz-item-${index}`} onClick={()=>setQuizIndex({questions: true, index: index})} className="quiz-box">{quiz.quizName.S}</div>
               )
           })}
         </div>
