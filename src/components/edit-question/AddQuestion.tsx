@@ -1,8 +1,8 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
-import { answerState, editQuestionPageState, questionNumberState, questionState, quizState } from "../../store/state";
-import { IQuiz, IQuizQuestion } from "../Quiz-Manager";
+import { answerState, editQuestionPageState, quizIndexState, quizState } from "../../store/state";
 import "./edit-questions.css";
+import { editQuestion } from "./EditQuestion";
 
 export function AddQuestion() {
   const setEditQuestionPageState = useSetRecoilState(editQuestionPageState);
@@ -19,11 +19,8 @@ export function AddQuestion() {
 
 export function AddAnswers() {
   const [answer, setAnswer] = useRecoilState(answerState);
-  const questions = useRecoilValue(questionState);
+  const quizIndex = useRecoilValue(quizIndexState);
   const quiz = useRecoilValue(quizState);
-  const questionNumber = useRecoilValue(questionNumberState);
-
-  let currentQuestion = quiz[questions.questionNumber].quizQuestions.L[questionNumber].M
 
   const changeAnswer = (event: React.ChangeEvent<HTMLInputElement>, letter: 'a'|'b'|'c'|'d'|'e'|'correct'|'question') => {
     if (letter === 'a') {
@@ -43,15 +40,7 @@ export function AddAnswers() {
     }
   }
 
-  function initialSet () {
-    setAnswer({question: currentQuestion.question.S, a: currentQuestion.answers.M.A.S, b: currentQuestion.answers.M.B.S, c:currentQuestion.answers.M.C.S, d:currentQuestion.answers.M.D?.S as string, e:currentQuestion.answers.M.E?.S as string, correct:currentQuestion.answers.M.correct.S})
-  }
-
-  useEffect(() => {
-    initialSet()
-  }, []);
   return(
-    
     <div>
         <div>
           <input className="input-box" placeholder="Enter New Question" name={"questions"} onChange={(e)=>changeAnswer(e, 'question')}></input>
@@ -69,55 +58,7 @@ export function AddAnswers() {
         <option value="b"></option>
         <option value="c"></option>
       </datalist>
-      <button className="button" type="submit" onClick={()=>editQuestion(questions.questionNumber, processData(quiz[questions.questionNumber], questionNumber, newQuizQuestion(answer)))}>Add Question</button>
+      <button className="button" type="submit" onClick={()=>editQuestion(quiz[quizIndex.index].quizQuestions.L.length, answer, quiz[quizIndex.index])}>Add Question</button>
     </div>
   )
-}
-
-// converts field data to a quiz question format
-function newQuizQuestion (answer: IAnswer): IQuizQuestion {
-  return ({
-    "M": {
-      "question":{"S":answer.question},
-      "answers": {
-          "M": {
-          "A": {"S": answer.a},
-          "B": {"S": answer.b},
-          "C": {"S": answer.c},
-          "D": {"S": answer.d},
-          "E": {"S": answer.e},
-          "correct": {"S": answer.correct}
-          }
-      }
-    }
-  })
-}
-
-// creates a new IQuiz with the updated quiz question
-function processData(quiz: IQuiz, quizNumber: number, newQuizQuestion: IQuizQuestion): IQuizQuestion[]{
-  let newQuizQuestions = quiz.quizQuestions.L.slice();
-  newQuizQuestions[quizNumber] = newQuizQuestion;
-  return newQuizQuestions;
-}
-
-// calls API to actually update data
-async function editQuestion (id: number, quizQuestions: IQuizQuestion[]) {
-  const url = `https://i83herpnfj.execute-api.eu-west-1.amazonaws.com/test/edit-question`;
-  await fetch(url, {
-    method: 'POST',
-    body: JSON.stringify({id: id, quizQuestions: quizQuestions}),
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  }).then((res)=>console.log(res));
-}
-
-interface IAnswer {
-  question: string;
-  a: string;
-  b: string;
-  c: string;
-  d: string;
-  e: string;
-  correct: string;
 }

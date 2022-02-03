@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
-import { answerState, editQuestionPageState, questionNumberState, questionState, quizState } from "../../store/state";
+import { answerState, editQuestionPageState, questionNumberState, quizIndexState, quizState } from "../../store/state";
 import { IQuiz, IQuizQuestion } from "../Quiz-Manager";
 import "./edit-questions.css";
 
@@ -19,11 +19,11 @@ export function EditQuestion() {
 
 export function AddAnswers() {
   const [answer, setAnswer] = useRecoilState(answerState);
-  const questions = useRecoilValue(questionState);
+  const quizIndex = useRecoilValue(quizIndexState);
   const quiz = useRecoilValue(quizState);
   const questionNumber = useRecoilValue(questionNumberState);
 
-  let currentQuestion = quiz[questions.questionNumber].quizQuestions.L[questionNumber].M
+  let currentQuestion = quiz[quizIndex.index].quizQuestions.L[questionNumber].M
 
   const changeAnswer = (event: React.ChangeEvent<HTMLInputElement>, letter: 'a'|'b'|'c'|'d'|'e'|'correct'|'question') => {
     if (letter === 'a') {
@@ -63,13 +63,13 @@ export function AddAnswers() {
         </div>
     
       <div className="correct-title">Correct Answer: </div>
-      <input value={answer.correct} list="correct-answers" onChange={(e)=>changeAnswer(e, 'correct')}/>
+      <input value={answer.correct}  onChange={(e)=>changeAnswer(e, 'correct')}/>
       <datalist id="correct-answers"> 
-        <option value="a"></option>
-        <option value="b"></option>
-        <option value="c"></option>
+        <option value="A"></option>
+        <option value="B"></option>
+        <option value="C"></option>
       </datalist>
-      <button className="button" type="submit" onClick={()=>editQuestion(questions.questionNumber, questionNumber, answer, quiz[questions.questionNumber])}>Add Question</button>
+      <button className="button" type="submit" onClick={()=>editQuestion(questionNumber, answer, quiz[quizIndex.index])}>Add Question</button>
     </div>
   )
 }
@@ -85,7 +85,7 @@ function newQuizQuestion (answer: IAnswer): IQuizQuestion {
           "B": {"S": answer.b},
           "C": {"S": answer.c},
           "D": {"S": "answer.d!"},
-          "E": {"S": "answer.e!"},
+          "E": {"S": answer.e!},
           "correct": {"S": answer.correct}
           }
       }
@@ -101,22 +101,23 @@ function processData(quiz: IQuiz, questionIndex: number, newQuizQuestion: IQuizQ
 }
 
 // calls API to actually update data
-async function editQuestion (quizId: number, questionIndex: number, answer: IAnswer, quiz: IQuiz) {
+export async function editQuestion (questionIndex: number, answer: IAnswer, quiz: IQuiz) {
   let quizQuestion = newQuizQuestion(answer);
   let newQuizData = processData(quiz, questionIndex, quizQuestion);
   let quizName = quiz.quizName.S;
+  let id = quiz.id.N;
 
   const url = ` https://i83herpnfj.execute-api.eu-west-1.amazonaws.com/test/create`;
-  const data = await fetch(url, {
+  await fetch(url, {
     method: 'POST',
-    body: JSON.stringify({id: quizId, quizName: quizName, quizQuestions: newQuizData}),
+    body: JSON.stringify({id: id, quizName: quizName, quizQuestions: newQuizData}),
     headers: {
       'Content-Type': 'application/json',
     },
   }).then((res)=>console.log(res));
 }
 
-function processDeleteData(quiz: IQuiz, questionIndex: number,): IQuizQuestion[]{
+function processDeleteData(quiz: IQuiz, questionIndex: number): IQuizQuestion[]{
   let newQuizQuestions = quiz.quizQuestions.L.slice();
   delete newQuizQuestions[questionIndex]
   return newQuizQuestions;
@@ -127,7 +128,7 @@ export async function deleteQuestion (quizId: number, questionIndex: number, qui
   let quizName = quiz.quizName.S;
   
   const url = ` https://i83herpnfj.execute-api.eu-west-1.amazonaws.com/test/create`;
-  const data = await fetch(url, {
+  await fetch(url, {
     method: 'POST',
     body: JSON.stringify({id: quizId, quizName: quizName, quizQuestions: newQuizData}),
     headers: {

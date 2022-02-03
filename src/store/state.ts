@@ -1,5 +1,5 @@
-import { atom } from 'recoil';
-import { IQuiz } from "../components/Quiz-Manager"
+import { atom, RecoilValue } from 'recoil';
+import { IQuiz, IQuizQuestion } from "../components/Quiz-Manager"
 export const loginUserState = atom({
   key: "loginUserState",
   default: {
@@ -21,14 +21,19 @@ export const loggedInState = atom({
 
 export const quizState = atom({
   key: "quizState",
-  default: {} as IQuiz[]
+  default: [{
+    "id":{"N":0},
+    "quizName": {"S":""},
+    "quizQuestions": {"L": {} as IQuizQuestion[]}
+}]
 });
 
-export const questionState = atom({
-  key: "questionState",
+// the index of the quiz that is selected
+export const quizIndexState = atom({
+  key: "quizIndexState",
   default: {
     questions: false,
-    questionNumber: 0
+    index: 0
   }
 })
 
@@ -58,3 +63,13 @@ export const editQuestionPageState = atom({
   key: "editQuestionPageState",
   default: false
 })
+
+export const addQuestionPageState = atom({
+  key: "addQuestionPageState",
+  default: false
+})
+
+export interface IAtomOrSelector {
+  node: RecoilValue<unknown>,
+  onChange: Function
+}

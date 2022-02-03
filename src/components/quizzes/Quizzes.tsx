@@ -1,11 +1,12 @@
 import { useRecoilValue, useSetRecoilState } from "recoil";
-import { loggedInState, questionState, quizState } from "../../store/state";
+import { loggedInState, quizIndexState, quizState } from "../../store/state";
 import "./quizzes.css";
 
 export function Quizzes() {
     const quiz = useRecoilValue(quizState);
-    const setQuestion = useSetRecoilState(questionState);
+    const setQuizIndex = useSetRecoilState(quizIndexState);
     const setLoggedIn = useSetRecoilState(loggedInState);
+    console.log()
     return(
       <div>
         <div className="box">
@@ -13,7 +14,7 @@ export function Quizzes() {
          <h1 className="title">Quizzes</h1>
           {quiz.map((quiz, index)=>{
               return(
-                  <div onClick={()=>setQuestion({questions: true, questionNumber: index})} className="quiz-box">{quiz.quizName.S}</div>
+                  <div onClick={()=>setQuizIndex({questions: true, index: index})} className="quiz-box">{quiz.quizName.S}</div>
               )
           })}
         </div>

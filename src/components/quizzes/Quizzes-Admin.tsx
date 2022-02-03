@@ -1,10 +1,10 @@
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
-import { loggedInState, questionState, quizNameState, quizState } from "../../store/state";
+import { loggedInState, quizIndexState, quizNameState, quizState } from "../../store/state";
 import "./quizzes.css";
 
-export function Quizzes() {
+export function QuizzesAdmin() {
     const quiz = useRecoilValue(quizState);
-    const setQuestion = useSetRecoilState(questionState);
+    const setQuizIndex= useSetRecoilState(quizIndexState);
     const setLoggedIn = useSetRecoilState(loggedInState);
     return(
       <div>
@@ -17,7 +17,7 @@ export function Quizzes() {
               return(
                   <div className="quiz-box">
                     <button className="delete-button" onClick={()=>deleteQuiz(quiz.id.N)}>X</button>
-                    <div className="question" onClick={()=>setQuestion({questions: true, questionNumber: index})}>{quiz.quizName.S}</div>
+                    <div className="question" onClick={()=>setQuizIndex({questions: true, index: index})}>{quiz.quizName.S}</div>
                   </div>
               )
           })}
@@ -49,13 +49,14 @@ async function addQuiz (id: number, quizName: string) {
 
 function AddQuiz () {
   const [quizName, setQuizName] = useRecoilState(quizNameState);
+  const quiz = useRecoilValue(quizState);
   return(
     <div>
       <div className="form-box">
       <button className="x-button" onClick={()=>closeForm()}>X</button>
         <h1 className="form-title">Add a New Quiz</h1>
         <input type="text" placeholder="Enter Quiz Title" className="input-box" onChange={(e)=>setQuizName(e.target.value)}/>
-        <button className="button" onClick={()=>{addQuiz(3, quizName); closeForm()}}>Add</button>
+        <button className="button" onClick={()=>{addQuiz(quiz.length, quizName); closeForm()}}>Add</button>
       </div>
     </div>
   )
