@@ -44,7 +44,7 @@ async function addQuiz (id: number, quizName: string) {
     headers: {
       'Content-Type': 'application/json',
     },
-  }).then((res)=>console.log(res));
+  }).then(()=>window.location.reload());
 }
 
 function AddQuiz () {

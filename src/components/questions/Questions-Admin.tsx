@@ -23,7 +23,7 @@ export function QuestionsAdmin() {
           {quiz[quizIndex.index].quizQuestions.L.map((answer, index)=>{
               return (
                   <div className="question-box-admin" data-testid={`question-item-box-${index}`} onClick={()=>{setQuestionNumberState(index); setEditQuestionPageState(true); setAddQuestionPage(false)}}>
-                      <button className="x-button" onClick={()=>deleteQuestion(quizIndex.index, index, quiz[quizIndex.index])}>X</button>
+                      <button className="x-button" onClick={()=>deleteQuestion(quiz[quizIndex.index].id.N, index, quiz[quizIndex.index])}>X</button>
                       <h3 className="question-title">{answer.M.question.S}</h3>
                       <ol type="A" className="answers">
                             <li className="answer">{answer.M.answers.M.A.S}</li>

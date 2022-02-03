@@ -119,7 +119,7 @@ export async function editQuestion (questionIndex: number, answer: IAnswer, quiz
 
 function processDeleteData(quiz: IQuiz, questionIndex: number): IQuizQuestion[]{
   let newQuizQuestions = quiz.quizQuestions.L.slice();
-  delete newQuizQuestions[questionIndex]
+  newQuizQuestions.splice(questionIndex, 1)
   return newQuizQuestions;
 }
 

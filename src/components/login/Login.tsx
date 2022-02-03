@@ -50,7 +50,7 @@ export function Login() {
             <div className='label'>Password
                 <input data-testid="login-password" className="input-box" type={"password"} placeholder="Enter Password" name={"password"} onChange={(e)=>setUser({username: user.username, password: e.target.value})}></input>
             </div>
-            <button className="button" type="submit" onClick={()=>checkUser(user)}>Submit</button>
+            <button data-testid="login-button"  className="button" type="submit" onClick={()=>checkUser(user)}>Submit</button>
         </div>
       </div>
     )
