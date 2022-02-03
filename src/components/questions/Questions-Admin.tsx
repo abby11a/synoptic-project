@@ -16,10 +16,10 @@ export function QuestionsAdmin() {
   return(
     <div>
       <div className="box">
-      <button onClick={()=>setQuizIndex({questions: false, index: 0})}>Back to Quizzes</button>
-      <button className="small-button" onClick={()=>{setAnswer(resetAnswers); setEditQuestionPageState(true); setAddQuestionPage(true)}}>Add Question</button>
-      <h1 className="title">Questions</h1>
-      <div>
+        <button onClick={()=>setQuizIndex({questions: false, index: 0})}>Back to Quizzes</button>
+        <button className="small-button" onClick={()=>{setAnswer(resetAnswers); setEditQuestionPageState(true); setAddQuestionPage(true)}}>Add Question</button>
+        <h1 className="title">Questions</h1>
+        <div>
           {quiz[quizIndex.index].quizQuestions.L.map((answer, index)=>{
               return (
                   <div className="question-box-admin" data-testid={`question-item-box-${index}`} onClick={()=>{setQuestionNumberState(index); setEditQuestionPageState(true); setAddQuestionPage(false)}}>

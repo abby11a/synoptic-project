@@ -1,15 +1,12 @@
-import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
-import { addQuestionPageState, answerState, editQuestionPageState, questionNumberState, quizIndexState, quizState } from "../../store/state";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { quizIndexState, quizState } from "../../store/state";
 
 
 import "./questions.css";
 
 export function QuestionsView() {
   const [quizIndex, setQuizIndex] = useRecoilState(quizIndexState);
-  const setAddQuestionPage = useSetRecoilState(addQuestionPageState);
   const quiz = useRecoilValue(quizState);
-  const setQuestionNumberState = useSetRecoilState(questionNumberState);
-  const setEditQuestionPageState = useSetRecoilState(editQuestionPageState);
   
   return(
     <div>

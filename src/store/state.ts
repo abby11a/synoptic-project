@@ -1,6 +1,6 @@
 import { atom, RecoilValue } from 'recoil';
 import { mockQuizData } from '../components/quiz-data';
-import { IQuizQuestion } from "../components/Quiz-Manager"
+
 export const loginUserState = atom({
   key: "loginUserState",
   default: {

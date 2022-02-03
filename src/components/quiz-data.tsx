@@ -5,16 +5,6 @@ export interface IUser {
     password: string
 }
 
-interface IQuizAnswer {
-    A: string,
-    B: string,
-    C: string,
-    D?: string,
-    E?: string,
-    correct: "A"|"B"|"C"|"D"|"E"
-}
-
-
 export interface IQuiz {
     quizName: string,
     quizQuestions: IQuizQuestion[]

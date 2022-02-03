@@ -15,7 +15,7 @@ export function QuizzesAdmin() {
          <h1 className="title">Quizzes </h1>
           {quiz.map((quiz, index)=>{
               return(
-                  <div className="quiz-box">
+                  <div className="quiz-box" key={index}>
                     <button className="delete-button" onClick={()=>deleteQuiz(quiz.id.N)}>X</button>
                     <div className="question" onClick={()=>setQuizIndex({questions: true, index: index})}>{quiz.quizName.S}</div>
                   </div>

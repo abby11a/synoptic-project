@@ -59,7 +59,6 @@ export function QuizManager() {
     useEffect(() => {
         loginCheck()
         fetchData()
-        console.log(getCookie('username'))
     }, []);
     
     return (
@@ -71,7 +70,6 @@ export function QuizManager() {
 
 // if user hasn't been logged in it will return to login page
 function loginCheck () {
-    console.log('used')
     if (!getCookie('role')){
         window.location.pathname = "/login";
     }

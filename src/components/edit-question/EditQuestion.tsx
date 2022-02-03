@@ -114,7 +114,7 @@ export async function editQuestion (questionIndex: number, answer: IAnswer, quiz
     headers: {
       'Content-Type': 'application/json',
     },
-  }).then((res)=>console.log(res));
+  }).then(()=>window.location.reload());
 }
 
 function processDeleteData(quiz: IQuiz, questionIndex: number): IQuizQuestion[]{
@@ -134,7 +134,7 @@ export async function deleteQuestion (quizId: number, questionIndex: number, qui
     headers: {
       'Content-Type': 'application/json',
     },
-  }).then((res)=>console.log(res));
+  }).then(()=>window.location.reload());
 }
 
 interface IAnswer {
