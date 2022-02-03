@@ -2,26 +2,17 @@ import { useRecoilState, useSetRecoilState } from "recoil";
 import { loggedInState, loginUserState } from "../../store/state";
 import { IUser } from "../quiz-data";
 import "./login.css";
-import {hash, compare} from './encrypt';
+import { compare } from './encrypt';
 
 interface IApiResponse { // interface for the response (TypeScript)
     Count: number,
     Items: {
-        role?: {string: string},
+        role?: {S: string},
         password?: {S: string},
         username?: {S: string}
     }[],
     ScannedCount: number
 }
-
-
-const rawPassword = 'password'
-
-console.log(hash(rawPassword))
-//1563995248971$10$58e0867f3acc11de363e03389bb27167
-
-console.log(compare('password','1563995248971$10$58e0867f3acc11de363e03389bb27167'));
-//true
 
 
 export function Login() {
@@ -31,7 +22,10 @@ export function Login() {
     const queryValidation = (res: IApiResponse, password: string) => { // function that deals with the returned API value
         if (res.Count === 1){
             if(compare(password, res.Items[0].password!.S)){
-                setLoggedIn(true)
+                document.cookie = `username=${res.Items[0].username?.S}`
+                document.cookie = `role=${res.Items[0].role?.S}`
+                setLoggedIn(true);
+                window.location.pathname = "/";
             } else {
                 alert('Incorrect Password')
             }

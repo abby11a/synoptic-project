@@ -1,9 +1,11 @@
 import { Login } from "./login/Login";
-import { Quizzes } from "./quizzes/Quizzes-Admin";
-import { editQuestionPageState, loggedInState, questionState, quizState } from "../store/state";
+import { Quizzes } from "./quizzes/Quizzes";
+import { QuizzesAdmin } from "./quizzes/Quizzes-Admin";
+import { addQuestionPageState, editQuestionPageState, loggedInState, quizIndexState, quizState } from "../store/state";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import { useEffect } from "react";
 import { Questions } from "./questions/Questions-Admin";
+import { AddQuestion } from "./edit-question/AddQuestion";
 import { EditQuestion } from "./edit-question/EditQuestion";
 
 export interface IQuizQuestion {
@@ -41,24 +43,51 @@ export const getApiKeys = async (): Promise<IQuizResponse> => {
 };
 
 export function QuizManager() {
-    const loggedIn = useRecoilValue(loggedInState);
-    const question = useRecoilValue(questionState);
-    const answer = useRecoilValue(editQuestionPageState);
+    const quizIndex = useRecoilValue(quizIndexState);
+    const editQuestionPage = useRecoilValue(editQuestionPageState);
+    const addQuestionPage = useRecoilValue(addQuestionPageState);
     const setQuiz = useSetRecoilState(quizState);
 
     const fetchData = async (): Promise<void> => {
+        console.log('fetched')
         getApiKeys().then((res) => {
             return setQuiz(res.Items);
         })
     }
 
     useEffect(() => {
+        loginCheck()
         fetchData()
+        console.log(getCookie('username'))
     }, []);
-
+    
     return (
         <div>
-            {!loggedIn ? <Login/> : (!question.questions ? <Quizzes/> : (!answer ? <Questions/> : <EditQuestion/>))}
+            {!quizIndex.questions ? <QuizQuestion/> : (!editQuestionPage ? <Questions/> : (addQuestionPage ? <AddQuestion/>: <EditQuestion/>))}
         </div>
     )
+}
+function loginCheck () {
+    console.log('used')
+    if (!getCookie('role')){
+        window.location.pathname = "/login";
+    }
+}
+function QuizQuestion () {
+    if (getCookie('role')==="admin"){
+        return(<QuizzesAdmin/>)
+    } else {
+        console.log(getCookie('role'))
+        return(<Quizzes/>)
+    }
+}
+function getCookie(cName: string) {
+    const name = cName + "=";
+    const cDecoded = decodeURIComponent(document.cookie); //to be careful
+    const cArr = cDecoded.split('; ');
+    let res;
+    cArr.forEach(val => {
+      if (val.indexOf(name) === 0) res = val.substring(name.length);
+    })
+    return res
 }
