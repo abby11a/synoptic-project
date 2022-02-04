@@ -1,8 +1,25 @@
-# Getting Started with Create React App
+# Getting Started with the Quiz Manager Web App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Start the App
 
-## Available Scripts
+To start the app, run:
+### `npm start`
+
+Open [http://localhost:3000](http://localhost:3000) to view the app in your browser.
+
+## Testing
+
+To run the tests, run:
+### `npm test`
+
+Launches the test runner in the interactive watch mode.\
+See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+
+-----
+
+## All Available Scripts
+
+_This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app)._
 
 In the project directory, you can run:
 
@@ -39,7 +56,7 @@ Instead, it will copy all the configuration files and the transitive dependencie
 
 You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
 
-## Learn More
+### Learn More
 
 You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
