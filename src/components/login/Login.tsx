@@ -1,10 +1,11 @@
-import { useRecoilState, useSetRecoilState } from "recoil";
-import { loggedInState, loginUserState } from "../../store/state";
+import { useRecoilState } from "recoil";
+import { loginUserState } from "../../store/state";
 import { IUser } from "../quiz-data";
 import "./login.css";
 import { compare } from './encrypt';
 
-interface IApiResponse { // interface for the response (TypeScript)
+/* interface for the response (TypeScript) */
+interface IApiResponse { 
     Count: number,
     Items: {
         role?: {S: string},
@@ -17,14 +18,13 @@ interface IApiResponse { // interface for the response (TypeScript)
 
 export function Login() {
     const [user, setUser] = useRecoilState(loginUserState); // state stores the client's username and password
-    const setLoggedIn = useSetRecoilState(loggedInState); // state that allows the user to access quiz manager after logging in
 
-    const queryValidation = (res: IApiResponse, password: string) => { // function that deals with the returned API value
+    /* function that deals with the returned API value */
+    const queryValidation = (res: IApiResponse, password: string) => {
         if (res.Count === 1){
             if(compare(password, res.Items[0].password!.S)){
                 document.cookie = `username=${res.Items[0].username?.S}`
                 document.cookie = `role=${res.Items[0].role?.S}`
-                setLoggedIn(true);
                 window.location.pathname = "/";
             } else {
                 alert('Incorrect Password')

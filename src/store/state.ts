@@ -15,11 +15,6 @@ export const userRoleState = atom({
   default: "restricted"
 });
 
-export const loggedInState = atom({
-  key: "loggedInState",
-  default: false
-});
-
 export const quizState = atom({
   key: "quizState",
   default: [{
