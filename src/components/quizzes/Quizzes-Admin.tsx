@@ -1,5 +1,6 @@
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import { quizIndexState, quizNameState, quizState } from "../../store/state";
+import { IQuiz } from "../quiz-data";
 import { deleteUserCookies } from "../Quiz-Manager";
 import "./quizzes.css";
 
@@ -16,7 +17,7 @@ export function QuizzesAdmin() {
           {quiz.map((quiz, index)=>{
               return(
                   <div className="quiz-box" key={index}>
-                    <button className="delete-button" onClick={()=>deleteQuiz(quiz.id.N)}>X</button>
+                    <button className="delete-button" onClick={()=>{deleteQuiz(quiz.id.N)}}>X</button>
                     <div className="question" onClick={()=>setQuizIndex({questions: true, index: index})}>{quiz.quizName.S}</div>
                   </div>
               )
@@ -33,7 +34,7 @@ async function deleteQuiz (id: number) {
       headers: {
         'Content-Type': 'application/json',
       },
-    }).then((res)=>console.log(res));
+    }).then(()=>window.location.reload());
 }
 
 async function addQuiz (id: number, quizName: string) {
@@ -53,10 +54,10 @@ function AddQuiz () {
   return(
     <div>
       <div className="form-box">
-      <button className="x-button" onClick={()=>closeForm()}>X</button>
+      <button className="x-add-question-button" onClick={()=>closeForm()}>X</button>
         <h1 className="form-title">Add a New Quiz</h1>
         <input type="text" placeholder="Enter Quiz Title" className="input-box" onChange={(e)=>setQuizName(e.target.value)}/>
-        <button className="button" onClick={()=>{addQuiz(quiz.length, quizName); closeForm()}}>Add</button>
+        <button className="button" onClick={()=>{addQuiz(getNewQuizId(quiz), quizName); closeForm()}}>Add</button>
       </div>
     </div>
   )
@@ -67,4 +68,18 @@ function openForm() {
 
 function closeForm() {
   document.getElementById("add-form")!.style.display = "none";
+}
+
+function getNewQuizId (quizzes: IQuiz[]) {
+  let idArr: number[] = [-1];
+  for (let i = 0; i < quizzes.length; i++){
+    if (!(idArr.includes(quizzes[i].id.N))) {
+      idArr.push(Number(quizzes[i].id.N))
+    }
+  }
+  for (let j = 0; j < quizzes.length + 1; j++) {
+    if (!(idArr.includes(j))) {
+      return j;
+    }
+  } return 0;
 }
