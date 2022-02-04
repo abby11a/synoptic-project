@@ -5,6 +5,8 @@
 To start the app, run:
 ### `npm start`
 
+Ensure your cookies are enabled.
+
 Open [http://localhost:3000](http://localhost:3000) to view the app in your browser.
 
 ## Testing
