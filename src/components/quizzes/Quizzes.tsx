@@ -7,7 +7,6 @@ export function Quizzes() {
     const quiz = useRecoilValue(quizState);
     const setQuizIndex = useSetRecoilState(quizIndexState);
 
-    console.log()
     return(
       <div>
         <div className="box">

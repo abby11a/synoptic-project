@@ -13,7 +13,7 @@ export function QuizzesAdmin() {
         <div className="box" id="main-quizzes-page">
          <button onClick={()=>deleteUserCookies()}>Log out</button>
          <button className="small-button" onClick={()=>openForm()}>Add Quiz</button>
-         <h1 className="title">Quizzes </h1>
+         <h1 className="title" data-testid="Quizzes">Quizzes </h1>
           {quiz.map((quiz, index)=>{
               return(
                   <div className="quiz-box" key={index}>

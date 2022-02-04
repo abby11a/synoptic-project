@@ -37,8 +37,8 @@ describe('The login page should', () => {
         fireEvent.change(component, {target: {value: 'mock-username'}});
 
         expect(onChange).toHaveBeenCalledTimes(2);
-        expect(onChange).toHaveBeenCalledWith({"password": "", "username": ""}); // Initial state on render.
-        expect(onChange).toHaveBeenCalledWith({"password": "", "username": "mock-username"}); // New value on change.
+        expect(onChange).toHaveBeenCalledWith({"password": "", "username": ""});
+        expect(onChange).toHaveBeenCalledWith({"password": "", "username": "mock-username"});
     });
     test('change when the user enters a password.', () => {
         const onChange = jest.fn();

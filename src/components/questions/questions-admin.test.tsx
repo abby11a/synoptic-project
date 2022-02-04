@@ -1,5 +1,6 @@
 import { fireEvent, render, screen } from '@testing-library/react';
 import { RecoilRoot } from 'recoil';
+import App from '../../App';
 import { questionNumberState } from '../../store/state';
 import { RecoilObserver } from '../login/login.test';
 import { QuestionsAdmin } from './Questions-Admin';
@@ -9,10 +10,10 @@ describe('The admin questions page should', () => {
         const onChange = jest.fn();
         
         render(
-        <RecoilRoot>
-            <RecoilObserver node={questionNumberState} onChange={onChange} />
-            <QuestionsAdmin />
-        </RecoilRoot>,
+            <RecoilRoot>
+                <RecoilObserver node={questionNumberState} onChange={onChange} />
+                <QuestionsAdmin />
+            </RecoilRoot>,
         );
 
         const component = screen.getByTestId(`question-item-box-1`);
@@ -23,4 +24,18 @@ describe('The admin questions page should', () => {
         expect(onChange).toHaveBeenCalledWith(0); // Initial state on render.
         expect(onChange).toHaveBeenCalledWith(1); // New value on change.
     });
+    test('loads and displays greeting', async () => {
+        render(
+            <RecoilRoot>
+                <QuestionsAdmin />
+            </RecoilRoot>,
+        )
+      
+        fireEvent.click(screen.getByTestId('add-question-button'))
+      
+        expect(screen.getByRole('heading')).toHaveTextContent('hello there')
+        expect(screen.getByRole('button')).toBeDisabled()
+      });
+      
+     
 });

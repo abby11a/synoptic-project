@@ -101,14 +101,13 @@ function processData(quiz: IQuiz, questionIndex: number, newQuizQuestion: IQuizQ
   return newQuizQuestions;
 }
 
-// calls API to actually update data
+// calls API to update database
 export async function editQuestion (questionIndex: number, answer: IAnswer, quiz: IQuiz) {
   let quizQuestion = newQuizQuestion(answer);
   let newQuizData = processData(quiz, questionIndex, quizQuestion);
   let quizName = quiz.quizName.S;
   let id = quiz.id.N;
 
-  console.log(newQuizData)
   const url = ` https://i83herpnfj.execute-api.eu-west-1.amazonaws.com/test/create`;
   await fetch(url, {
     method: 'POST',
