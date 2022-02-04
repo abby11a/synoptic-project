@@ -19,10 +19,10 @@ export function QuestionsAdmin() {
         <button onClick={()=>setQuizIndex({questions: false, index: 0})}>Back to Quizzes</button>
         <button className="small-button" onClick={()=>{setAnswer(resetAnswers); setEditQuestionPageState(true); setAddQuestionPage(true)}}>Add Question</button>
         <h1 className="title">Questions</h1>
-        <div>
+        <div data-testid="question-list" >
           {quiz[quizIndex.index].quizQuestions.L.map((answer, index)=>{
               return (
-                  <div className="question-box-admin" data-testid={`question-item-box-${index}`} onClick={()=>{setQuestionNumberState(index); setEditQuestionPageState(true); setAddQuestionPage(false)}}>
+                  <div key={index} className="question-box-admin" data-testid={`question-item-box-${index}`} onClick={()=>{setQuestionNumberState(index); setEditQuestionPageState(true); setAddQuestionPage(false)}}>
                       <button className="x-button" onClick={()=>deleteQuestion(quiz[quizIndex.index].id.N, index, quiz[quizIndex.index])}>X</button>
                       <h3 className="question-title">{answer.M.question.S}</h3>
                       <ol type="A" className="answers">
@@ -37,6 +37,7 @@ export function QuestionsAdmin() {
               )
           })}
         </div>
+        <i>Click on a question to edit it.</i>
       </div>
     </div>
   )

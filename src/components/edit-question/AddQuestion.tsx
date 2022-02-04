@@ -22,7 +22,7 @@ export function AddAnswers() {
   const quizIndex = useRecoilValue(quizIndexState);
   const quiz = useRecoilValue(quizState);
 
-  const changeAnswer = (event: React.ChangeEvent<HTMLInputElement>, letter: 'a'|'b'|'c'|'d'|'e'|'correct'|'question') => {
+  const changeAnswer = (event: React.ChangeEvent<HTMLInputElement|HTMLSelectElement>, letter: 'a'|'b'|'c'|'d'|'e'|'correct'|'question') => {
     if (letter === 'a') {
       setAnswer({a: event.target.value, b: answer.b, c: answer.c, d: answer.d, e:answer.e, correct: answer.correct, question: answer.question})
     } else if (letter === 'b') {
@@ -52,13 +52,14 @@ export function AddAnswers() {
         </div>
     
       <div className="correct-title">Correct Answer: </div>
-      <input value={answer.correct} list="correct-answers" onChange={(e)=>changeAnswer(e, 'correct')}/>
-      <datalist id="correct-answers"> 
-        <option value="a"></option>
-        <option value="b"></option>
-        <option value="c"></option>
-      </datalist>
-      <button className="button" type="submit" onClick={()=>editQuestion(quiz[quizIndex.index].quizQuestions.L.length, answer, quiz[quizIndex.index])}>Add Question</button>
+      <select id="correct-answers" value={answer.correct} onChange={(e)=>changeAnswer(e, 'correct')}> 
+        <option value="A">A</option>
+        <option value="B">B</option>
+        <option value="C">C</option>
+        <option value="D">D</option>
+        <option value="E">E</option>
+      </select>
+      <button data-testid="add-question-button"  className="button" type="submit" onClick={()=>editQuestion(quiz[quizIndex.index].quizQuestions.L.length, answer, quiz[quizIndex.index])}>Add Question</button>
     </div>
   )
 }

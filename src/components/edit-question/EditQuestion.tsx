@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import { answerState, editQuestionPageState, questionNumberState, quizIndexState, quizState } from "../../store/state";
-import { IQuiz, IQuizQuestion } from "../Quiz-Manager";
+import { IQuizQuestion, IQuiz } from "../quiz-data";
 import "./edit-questions.css";
 
 export function EditQuestion() {
@@ -25,7 +25,7 @@ export function AddAnswers() {
 
   let currentQuestion = quiz[quizIndex.index].quizQuestions.L[questionNumber].M
 
-  const changeAnswer = (event: React.ChangeEvent<HTMLInputElement>, letter: 'a'|'b'|'c'|'d'|'e'|'correct'|'question') => {
+  const changeAnswer = (event: React.ChangeEvent<HTMLInputElement|HTMLSelectElement>, letter: 'a'|'b'|'c'|'d'|'e'|'correct'|'question') => {
     if (letter === 'a') {
       setAnswer({a: event.target.value, b: answer.b, c: answer.c, d: answer.d, e:answer.e, correct: answer.correct, question: answer.question})
     } else if (letter === 'b') {
@@ -53,22 +53,23 @@ export function AddAnswers() {
   return(
     
     <div>
-        <div>
-          <input className="input-box" value={answer.question} placeholder="Enter New Question" name={"questions"} onChange={(e)=>changeAnswer(e, 'question')}></input>
-          <input className="input-box" value={answer.a} placeholder="Enter Answer A" name={"answerA"} onChange={(e)=>changeAnswer(e, 'a')}></input>
-          <input className="input-box" value={answer.b} placeholder="Enter Answer B" name={"answerB"} onChange={(e)=>changeAnswer(e, 'b')}></input>
-          <input className="input-box" value={answer.c} placeholder="Enter Answer C" name={"answerC"} onChange={(e)=>changeAnswer(e, 'c')}></input>
-          <input className="input-box" value={answer.d} placeholder="Enter Answer D (optional)" name={"answerD"} onChange={(e)=>changeAnswer(e, 'd')}></input>
-          <input className="input-box" value={answer.e} placeholder="Enter Answer E (optional)" name={"answerE"} onChange={(e)=>changeAnswer(e, 'e')}></input>
-        </div>
+      <div>
+        <input className="input-box" value={answer.question} placeholder="Enter New Question" name={"questions"} onChange={(e)=>changeAnswer(e, 'question')}></input>
+        <input className="input-box" value={answer.a} placeholder="Enter Answer A" name={"answerA"} onChange={(e)=>changeAnswer(e, 'a')}></input>
+        <input className="input-box" value={answer.b} placeholder="Enter Answer B" name={"answerB"} onChange={(e)=>changeAnswer(e, 'b')}></input>
+        <input className="input-box" value={answer.c} placeholder="Enter Answer C" name={"answerC"} onChange={(e)=>changeAnswer(e, 'c')}></input>
+        <input className="input-box" value={answer.d} placeholder="Enter Answer D (optional)" name={"answerD"} onChange={(e)=>changeAnswer(e, 'd')}></input>
+        <input className="input-box" value={answer.e} placeholder="Enter Answer E (optional)" name={"answerE"} onChange={(e)=>changeAnswer(e, 'e')}></input>
+      </div>
     
       <div className="correct-title">Correct Answer: </div>
-      <input value={answer.correct}  onChange={(e)=>changeAnswer(e, 'correct')}/>
-      <datalist id="correct-answers"> 
-        <option value="A"></option>
-        <option value="B"></option>
-        <option value="C"></option>
-      </datalist>
+      <select id="correct-answers" value={answer.correct}  onChange={(e)=>changeAnswer(e, 'correct')}> 
+        <option value="A">A</option>
+        <option value="B">B</option>
+        <option value="C">C</option>
+        <option value="D">D</option>
+        <option value="E">E</option>
+      </select>
       <button className="button" type="submit" onClick={()=>editQuestion(questionNumber, answer, quiz[quizIndex.index])}>Add Question</button>
     </div>
   )
@@ -81,12 +82,12 @@ function newQuizQuestion (answer: IAnswer): IQuizQuestion {
       "question":{"S":answer.question},
       "answers": {
           "M": {
-          "A": {"S": answer.a},
-          "B": {"S": answer.b},
-          "C": {"S": answer.c},
-          "D": {"S": "answer.d!"},
-          "E": {"S": answer.e!},
-          "correct": {"S": answer.correct}
+            "correct": {"S": answer.correct},
+            "A": {"S": answer.a},
+            "B": {"S": answer.b},
+            "C": {"S": answer.c},
+            "D": {"S": answer.d!},
+            "E": {"S": answer.e!},
           }
       }
     }
@@ -107,6 +108,7 @@ export async function editQuestion (questionIndex: number, answer: IAnswer, quiz
   let quizName = quiz.quizName.S;
   let id = quiz.id.N;
 
+  console.log(newQuizData)
   const url = ` https://i83herpnfj.execute-api.eu-west-1.amazonaws.com/test/create`;
   await fetch(url, {
     method: 'POST',
@@ -119,7 +121,7 @@ export async function editQuestion (questionIndex: number, answer: IAnswer, quiz
 
 function processDeleteData(quiz: IQuiz, questionIndex: number): IQuizQuestion[]{
   let newQuizQuestions = quiz.quizQuestions.L.slice();
-  newQuizQuestions.splice(questionIndex, 1)
+  newQuizQuestions.splice(questionIndex, 1);
   return newQuizQuestions;
 }
 

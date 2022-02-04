@@ -9,34 +9,7 @@ import { AddQuestion } from "./edit-question/AddQuestion";
 import { EditQuestion } from "./edit-question/EditQuestion";
 import { Login } from "./login/Login";
 import { Questions } from "./questions/Questions";
-
-export interface IQuizQuestion {
-    "M": {
-        "question":{"S":string},
-        "answers": {
-            "M": {
-            "A": {"S": string},
-            "B": {"S": string},
-            "C": {"S": string},
-            "D"?: {"S": string},
-            "E"?: {"S": string},
-            "correct": {"S": string}
-            }
-        }
-    }
-}
-
-export interface IQuiz {
-    "id":{"N":number},
-    "quizName": {"S":string},
-    "quizQuestions": {"L": IQuizQuestion[]}
-}
-
-export interface IQuizResponse {
-    "Count": number,
-    "Items": IQuiz[],
-    "ScannedCount":number
-  }
+import { IQuizResponse } from "./quiz-data";
 
 export const getApiKeys = async (): Promise<IQuizResponse> => {
     const url = ("https://i83herpnfj.execute-api.eu-west-1.amazonaws.com/test/list");
@@ -92,8 +65,10 @@ function QuizQuestions () {
         return(<QuestionsAdmin/>)
     } else if (getCookie('role')===("view")){
         return(<QuestionsView/>)
-    } else {
+    } else if (getCookie('role')===("restricted")){
         return(<Questions/>)
+    } else {
+        return(<Login/>)
     }
 }
 

@@ -13,9 +13,9 @@ export function Questions() {
         <button onClick={()=>setQuizIndex({questions: false, index: 0})}>Back to Quizzes</button>
         <h1 className="title">Questions</h1>
         <div>
-            {quiz[quizIndex.index].quizQuestions.L.map((answer)=>{
+            {quiz[quizIndex.index].quizQuestions.L.map((answer, index)=>{
                 return (
-                    <div className="question-box">
+                    <div key={index} className="question-box">
                         <h3 className="question-title">{answer.M.question.S}</h3>
                         <ol type="A" className="answers">
                             <li className="answer">{answer.M.answers.M.A.S}</li>

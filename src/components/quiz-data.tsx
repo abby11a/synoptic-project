@@ -1,13 +1,34 @@
-import { IQuizQuestion } from "./Quiz-Manager";
+export interface IQuizQuestion {
+    "M": {
+        "question":{"S":string},
+        "answers": {
+            "M": {
+            "A": {"S": string},
+            "B": {"S": string},
+            "C": {"S": string},
+            "D"?: {"S": string},
+            "E"?: {"S": string},
+            "correct": {"S": string}
+            }
+        }
+    }
+}
+
+export interface IQuiz {
+    "id": {"N":number},
+    "quizName": {"S":string},
+    "quizQuestions": {"L": IQuizQuestion[]}
+}
+
+export interface IQuizResponse {
+    "Count": number,
+    "Items": IQuiz[],
+    "ScannedCount":number
+}
 
 export interface IUser {
     username: string,
     password: string
-}
-
-export interface IQuiz {
-    quizName: string,
-    quizQuestions: IQuizQuestion[]
 }
 
 export const mockQuizData: IQuizQuestion[] = 

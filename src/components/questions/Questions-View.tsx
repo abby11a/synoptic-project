@@ -16,7 +16,7 @@ export function QuestionsView() {
       <div>
           {quiz[quizIndex.index].quizQuestions.L.map((answer, index)=>{
               return (
-                  <div className="question-box" data-testid={`question-item-box-${index}`}>
+                  <div key={index} className="question-box" data-testid={`question-item-box-${index}`}>
                       <h3 className="question-title">{answer.M.question.S}</h3>
                       <ol type="A" className="answers">
                             <li className="answer">{answer.M.answers.M.A.S}</li>
